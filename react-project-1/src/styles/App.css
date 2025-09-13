@@ -1,0 +1,19 @@
+.App {
+    width: 80%;
+}
+
+#root {
+    display: flex;
+    justify-content: center;
+}
+
+.post {
+    display: flex;
+    padding: 10px 5px;
+    border: 2px solid rgb(47, 212, 47);
+    border-radius: 10px;
+    background-color: rgb(197, 236, 197);
+    margin-top: 10px;
+    justify-content: space-between;
+    align-items: center;
+}
