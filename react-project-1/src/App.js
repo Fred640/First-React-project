@@ -29,7 +29,10 @@ function App() {
   return (
     <div className="App">
       <PostForm create={createPost}/>
-      <PostList remove={removePost} posts={posts} title={"Post List"}/>
+      {posts.length !==0
+      ? <PostList remove={removePost} posts={posts} title={"Post List"}/>
+      : <div>Posts not found</div>
+      }
     </div>
   );
 }
