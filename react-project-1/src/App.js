@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { useState } from "react";
 import PostList from "./components/Posts/PostList";
 import PostForm from "./components/Posts/PostForm";
-import "/home/fred/Projects/First-React-project/react-project-2/src/styles/App.css"
+import "/home/fred/Projects/First-React-project/react-project-1/src/styles/App.css"
 import Sel from "./components/UI/select/Sel";
 import Inp from "./components/UI/input/Inp";
 import Btn from "./components/UI/button/Btn";
@@ -32,26 +32,32 @@ function App() {
   const sortPosts = (sort) => {
     setSelSort(sort)
   }
+  
+  const sortedPost = useMemo(() => {
+  if(selSort) {
+    return [...posts].sort((a, b) => a[selSort].localeCompare(b[selSort]))
+  } else {
+    return posts
+  }
+  }, [selSort, posts])
 
   // Modal window
   const [modal, setModal] = useState(false)
 
 
 
-  const sortedPost = useMemo(() => {
-    console.log("o")
-    if(selSort) {
-      return [...posts].sort((a, b) => a[selSort].localeCompare(b[selSort]))
-    }
-    return posts
-  }, [selSort, posts])
+
 
 
 
   // Function off search posts
   const [searchQuery, setSearchQuery] = useState()
   const sortedAndSearchedPosts = useMemo(() => {
-    return sortedPost.filter(post => post.title.includes(searchQuery))
+    return sortedPost.filter(post => {
+      if(searchQuery) {
+        return post.title.includes(searchQuery)
+      } else {return posts}
+    })
   }, [searchQuery, sortedPost])
 
   return (

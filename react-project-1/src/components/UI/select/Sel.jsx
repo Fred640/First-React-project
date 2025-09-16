@@ -1,5 +1,5 @@
 import React from "react";
-import classes from "/home/fred/Projects/First-React-project/react-project-2/src/components/UI/select/Sel.module.css"
+import classes from "/home/fred/Projects/First-React-project/react-project-1/src/components/UI/select/Sel.module.css"
 
 const Sel = ({props, options, defaultValue, value, onChange}) => {
 
