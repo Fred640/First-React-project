@@ -2,10 +2,11 @@ import React, { useMemo } from "react";
 import { useState } from "react";
 import PostList from "./components/Posts/PostList";
 import PostForm from "./components/Posts/PostForm";
-import "/home/fred/Projects/First-React-project/react-project-1/src/styles/App.css"
+import "/home/fred/Projects/First-React-project/react-project-2/src/styles/App.css"
 import Sel from "./components/UI/select/Sel";
 import Inp from "./components/UI/input/Inp";
 import Btn from "./components/UI/button/Btn";
+import Modal from "./components/UI/myModal/Modal";
 
 function App() {
   // Posts List
@@ -17,13 +18,23 @@ function App() {
   // Funсtion off adding posts
   const createPost = (newPost) => {
     setPosts([...posts, newPost])
+    setModal(false)
+  }
+
+  // Function off removing posts
+  const removePost = (post) => {
+    setPosts(posts.filter(p => p.id!==post.id))
   }
 
   // Function off sorting posts
   const [selSort, setSelSort] = useState("")
+
   const sortPosts = (sort) => {
     setSelSort(sort)
   }
+
+  // Modal window
+  const [modal, setModal] = useState(false)
 
 
 
@@ -35,10 +46,7 @@ function App() {
     return posts
   }, [selSort, posts])
 
-  // Function off removing posts
-  const removePost = (post) => {
-    setPosts(posts.filter(p => p.id!==post.id))
-  }
+
 
   // Function off search posts
   const [searchQuery, setSearchQuery] = useState()
@@ -48,16 +56,20 @@ function App() {
 
   return (
     <div className="App">
-      <PostForm create={createPost}/>
+      <Btn onClick={() => setModal(true)}>Create Post</Btn>
+      <Modal visible={modal} setVisible={setModal}><PostForm create={createPost}/></Modal>
+      
+
       <Sel
       onChange={sortPosts}
+      value={selSort}
       options={[
         {value:"title", name:"by title"}, {value:"body", name:"by description"}
       ]}
       style={{marginTop:"5px"}}
       defaultValue="sort"
 
-      value={selSort}
+      
       // onChange={sort => setSelSort(sort)}
       />
 
@@ -65,6 +77,7 @@ function App() {
       value={searchQuery}
       onChange={event => setSearchQuery(event.target.value)}
       placeholder="search" style={{width:"50%"}}/>
+
       <Btn style={{marginLeft:"5px"}}>Search</Btn>
 
       {posts.length !==0
