@@ -7,6 +7,8 @@ import Sel from "./components/UI/select/Sel";
 import Inp from "./components/UI/input/Inp";
 import Btn from "./components/UI/button/Btn";
 import Modal from "./components/UI/myModal/Modal";
+import { useSortedPosts } from "./hooks/usePosts";
+import { usePosts } from "./hooks/usePosts";
 
 function App() {
   // Posts List
@@ -33,32 +35,20 @@ function App() {
     setSelSort(sort)
   }
   
-  const sortedPost = useMemo(() => {
-  if(selSort) {
-    return [...posts].sort((a, b) => a[selSort].localeCompare(b[selSort]))
-  } else {
-    return posts
-  }
-  }, [selSort, posts])
+
 
   // Modal window
   const [modal, setModal] = useState(false)
 
+  const [searchQuery, setSearchQuery] = useState()
 
-
-
+  const sortedAndSearchedPosts = usePosts(posts, selSort, searchQuery)
 
 
 
   // Function off search posts
-  const [searchQuery, setSearchQuery] = useState()
-  const sortedAndSearchedPosts = useMemo(() => {
-    return sortedPost.filter(post => {
-      if(searchQuery) {
-        return post.title.includes(searchQuery)
-      } else {return posts}
-    })
-  }, [searchQuery, sortedPost])
+  
+
 
   return (
     <div className="App">
